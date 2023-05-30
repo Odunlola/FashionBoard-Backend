@@ -20,7 +20,7 @@ const morgan = require("morgan");
 app.use(cors()); // to prevent cors errors, open access to all origins
 app.use(morgan("dev")); // logging
 
-const { Specials } = require('./models/brands')
+const {brands} = require('./models/brands')
 
 app.use(express.json()); // parse json bodies
 
@@ -29,7 +29,7 @@ app.use('', userController);
 
 // create a test route
 app.get("/", (req, res) =>  {
-  res.json(Specials)
+  res.json(brands)
 })
 
 app.use("/brands", brandRouter);

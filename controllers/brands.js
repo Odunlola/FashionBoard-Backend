@@ -2,7 +2,7 @@
 const express = require("express");
 
 //Linking model
-const { Brands,Comments } = require("../models");
+const {brands,comments} = require("../models");
 
 // Create route
 const router = express.Router();
@@ -12,21 +12,29 @@ const seededData = [
         name: "Rohan Odhiambo",
         style: "Image",
         website: "Photo by Rohan Odhiambo on Unsplash",
-        image: "https://imgur.com/o2Wl40R"
+        image: "https://imgur.com/o2Wl40R",
+        price: 0,
+        speciality: 'Dresses'
 
     },
     {
         name:"Terricks Noah",       
         style:"Image",
         website:"Photo by Terricks Noah on Unsplash",
-        image:"https://imgur.com/MRGc71m"
+        image:"https://imgur.com/MRGc71m",
+        price: 0,
+        speciality: 'Dresses'
+
         
     },
     {
          name: "Oladimeji Odunsi",
          style: "Image",
          website: "Photo by Oladimeji Odunsi on Unsplash",  
-         image: "https://imgur.com/o2Wl40R"
+         image: "https://imgur.com/o2Wl40R",
+         price: 0,
+         speciality: 'Dresses'
+ 
     }
 ]
 
@@ -35,26 +43,19 @@ const seededData = [
     try { let myBrands;
         console.log(req.query);
         if(req.query.search) {
-            myBrands = await Brands.find({name: req.query.search})
+            myBrands = await brands.find({name: req.query.search})
             console.log(myBrands);
         } else {
-            myBrands = await Brands.find({})
+            myBrands = await brands.find({})
             console.log(myBrands);
         }
         res.json(myBrands);
     } catch(err) {
-        // If there's an error, it'll go to the catch block
+        // catch error
         console.log(err);
         next();
     }
-    // try {
-    //     // send all products
-    //     let myBrands = await Brands.find({});
-    //     res.json({ myBrands, status: res.statusCode });
-    // } catch (error) {
-    //     console.log(error);
-    //     res.json({ status: res.statusCode, errors: error.errors });
-    // }
+
   });
 
 
@@ -62,8 +63,8 @@ const seededData = [
   // seed route
 router.get("/seed", async (req, res, next) => {
     try {
-        await Brands.deleteMany({});
-        await Brands.insertMany(seededData);
+        await brands.deleteMany({});
+        await brands.insertMany(seededData);
         res.redirect("/brands");
     } catch (error) {
         next();
@@ -82,22 +83,14 @@ router.get("/new", async (req, res, next) => {
 // show route
 router.get("/:id", async (req, res, next) => {
     try {
-        // error message
-        let error;
-        switch (req.query.error) {
-            case "invalidrating":
-                error = "Invalid rating: Rating must be between 1 and 10";
-                break;
-            default:
-                break;
-        }
-
+       
         // Grab the brand that has the corresponding ID in MongoDB
-        const brand = await Brands.findById(req.params.id);
-
+        const brand = await brands.findById(req.params.id);
+        res.json(brand)
+        
         // logic for getting and passing in comments
 
-        let brandComments = await Comments.find({ product: req.params.id }); //name for parity with views
+        let brandComments = await comments.find({ product: req.params.id }); //name for parity with views
 
         // get array of commenter names
         let brandCommentUsernames = []; //parity
@@ -107,7 +100,7 @@ router.get("/:id", async (req, res, next) => {
             brandCommentUsernames[i] = (commenter.username);
         }
 
-        res.render("brands/show", { brand, brandComments, brandCommentUsernames, user: checkCurrUser(req), error });
+        res.json("brands/show", { brand, brandComments, brandCommentUsernames, user: checkCurrUser(req), error });
     } catch (error) {
         next();
     }
@@ -116,7 +109,7 @@ router.get("/:id", async (req, res, next) => {
 // get edit page route
 router.get("/:id/edit", async (req, res, next) => {
     try {
-        const brand= await Brands.findById(req.params.id);
+        const brand= await brands.findById(req.params.id);
         if (typeof req.session.currentUser.id === "undefined") {
             // if user is not logged in, tell them to login
             res.redirect("/login?error=privilege");
@@ -137,7 +130,7 @@ router.get("/:id/edit", async (req, res, next) => {
 // delete confirmation route
 router.get("/:id/delete", async (req, res, next) => {
     try {
-        const brand = await Brands.findById(req.params.id);
+        const brand = await brands.findById(req.params.id);
         if (typeof req.session.currentUser.id === "undefined") {
             // if user is not logged in, tell them to login
             res.redirect("/login?error=privilege");
@@ -163,7 +156,8 @@ router.get("/:id/delete", async (req, res, next) => {
     //   send all brands
     const newBrand = req.body
     // newBrand.user = req.session.currentUser.id;
-    await Books.create(req.body);
+    await brands.create(req.body);
+    console.log(newBrand);
     res.redirect('/brands')
       //send error
     } catch(error) {
@@ -175,13 +169,12 @@ router.get("/:id/delete", async (req, res, next) => {
   router.put("/:id", async (req, res,next) => {
     try {
       // send all brands
-      const updatedBrand = await Brands.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const updatedBrand = await brands.findByIdAndUpdate(req.params.id, req.body, { new: true });
       res.json(updatedBrand);
     } catch (error) {
       //send error
       console.log(error);
         next();
-      //res.status(400).json(error);
     }
   });
   
@@ -189,7 +182,7 @@ router.get("/:id/delete", async (req, res, next) => {
   router.delete("/:id", async (req, res) => {
     try {
       // send all brands
-      const deletedBrand = await Brands.findByIdAndRemove(req.params.id);
+      const deletedBrand = await brands.findByIdAndRemove(req.params.id);
       res.redirect('/brands');
     } catch (error) {
       //send error
