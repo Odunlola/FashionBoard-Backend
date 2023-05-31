@@ -10,7 +10,7 @@ const router = express.Router();
 const seededData = [
     {
         name: "Rohan Odhiambo",
-        style: "Image",
+        style: "outfit",
         website: "Photo by Rohan Odhiambo on Unsplash",
         image: "https://imgur.com/o2Wl40R",
         price: 0,
@@ -19,7 +19,7 @@ const seededData = [
     },
     {
         name:"Terricks Noah",       
-        style:"Image",
+        style:"outfit",
         website:"Photo by Terricks Noah on Unsplash",
         image:"https://imgur.com/MRGc71m",
         price: 0,
@@ -29,13 +29,13 @@ const seededData = [
     },
     {
          name: "Oladimeji Odunsi",
-         style: "Image",
+         style: "outfit",
          website: "Photo by Oladimeji Odunsi on Unsplash",  
          image: "https://imgur.com/o2Wl40R",
          price: 0,
          speciality: 'Dresses'
  
-    }
+    }git 
 ]
 
   // Brand index route

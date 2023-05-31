@@ -6,3 +6,5 @@ module.exports = {
     Users : require("./users"),
     Comments : require("./comments")
 };
+
+module.exports = Index;
