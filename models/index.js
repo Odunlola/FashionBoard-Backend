@@ -7,4 +7,3 @@ module.exports = {
     Comments : require("./comments")
 };
 
-module.exports = Index;
