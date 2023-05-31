@@ -32,8 +32,6 @@ app.get("/", (req, res) =>  {
   res.json(brands)
 })
 
-app.use("/brands", brandRouter);
-app.use('', userController);
 
 app.get('/*', (req, res) => {
     res.json({comment: "This is a bad URL"});
