@@ -35,7 +35,7 @@ const seededData = [
          price: 0,
          speciality: 'Dresses'
  
-    }git 
+    }
 ]
 
   // Brand index route
