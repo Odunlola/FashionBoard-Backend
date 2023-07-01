@@ -12,12 +12,13 @@ As a user, I can share my boards with family and friends with provision for them
 
 Screenshots: https://app.uizard.io/prototypes/qR1MjOqW9ofJB6Q5MxOl
 
-Front end host  https://6477f144f863c11c7702f567--silver-bombolone-669554.netlify.app/brands
-Back end host: https://fashion-board-backend.onrender.com
-Front end github: https://github.com/Odunlola/FashionBoard-Frontend
-Back end github: https://github.com/Odunlola/FashionBoard-Backend
+Front end host https://6477f144f863c11c7702f567--silver-bombolone-669554.netlify.app/
 
-![image](https://github.com/Odunlola/FashionBoard-Backend/assets/120194465/efb7a598-de5b-463a-9701-cde09d591c7b)
+Back end host: https://fashion-board-backend.onrender.com
+
+Front end github: https://github.com/Odunlola/FashionBoard-Frontend
+
+Back end github: https://github.com/Odunlola/FashionBoard-Backend
 
 Framework:
 
